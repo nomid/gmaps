@@ -1,16 +1,28 @@
+<% content_for :head do %>
+  <style type="text/css">
+    html, body, #map { height: 500px; width: 600px; margin: 0; padding: 0;}
+  </style>
+  <script type="text/javascript" 
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_6GUjeuVtcXvRSDPQL0WRSIQqphNV6Wo"></script>
+  <script type="text/javascript" src="assets/map/map.js"></script>
+<% end %>
+<div id="map"></div>
 <h1>Listing map_points</h1>
 
-<table>
+<table id="map_points">
   <tr>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>latitude</th>
+    <th>longitude</th>
+    <th>address</th>
+    <th>action</th>
   </tr>
 
 <% @map_points.each do |map_point| %>
+
   <tr>
-    <td><%= link_to 'Show', map_point %></td>
-    <td><%= link_to 'Edit', edit_map_point_path(map_point) %></td>
+    <td><%= map_point.latitude %></td>
+    <td><%= map_point.longitude %></td>
+    <td><%= map_point.address %></td>
     <td><%= link_to 'Destroy', map_point, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>

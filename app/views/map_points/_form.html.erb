@@ -1,4 +1,10 @@
+<% content_for :head do %>
+  <script type="text/javascript" src="<%= root_url %>assets/map/add.js"></script>
+<% end %>
 <%= form_for(@map_point) do |f| %>
+  <%= f.label :latitude %>:<%= f.text_field :latitude %>
+  <%= f.label :longitude %>:<%= f.text_field :longitude %>
+  <%#= f.hidden_field :user_id, :value => current_user.id%>
   <% if @map_point.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@map_point.errors.count, "error") %> prohibited this map_point from being saved:</h2>
@@ -9,9 +15,9 @@
       <% end %>
       </ul>
     </div>
+    
   <% end %>
-
-  <div class="actions">
+  <div class="actions js_submit_point">
     <%= f.submit %>
   </div>
 <% end %>

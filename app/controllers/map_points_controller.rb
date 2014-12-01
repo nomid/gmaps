@@ -1,8 +1,12 @@
 class MapPointsController < ApplicationController
+  # before_action :authenticate_user!
   # GET /map_points
   # GET /map_points.json
   def index
-    @map_points = MapPoint.all
+    unless user_signed_in?
+      return redirect_to '/users/sign_in'
+    end
+    @map_points = MapPoint.where(user_id: current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,6 +45,7 @@ class MapPointsController < ApplicationController
   # POST /map_points.json
   def create
     @map_point = MapPoint.new(params[:map_point])
+    @map_point.user_id = current_user.id
 
     respond_to do |format|
       if @map_point.save
@@ -72,11 +77,16 @@ class MapPointsController < ApplicationController
   # DELETE /map_points/1
   # DELETE /map_points/1.json
   def destroy
+    unless params[:id] == current_user.id
+      render :status => :forbidden, :text => "Forbidden"
+      return
+    end
+
     @map_point = MapPoint.find(params[:id])
     @map_point.destroy
 
     respond_to do |format|
-      format.html { redirect_to map_points_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end

@@ -78,7 +78,7 @@ class MapPointsController < ApplicationController
   # DELETE /map_points/1.json
   def destroy
     @map_point = MapPoint.find(params[:id])
-    unless @map_pint.user_id == current_user.id
+    unless @map_point.user_id == current_user.id
       render :status => :forbidden, :text => "Forbidden"
       return
     end
